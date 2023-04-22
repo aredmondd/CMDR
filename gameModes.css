@@ -1,0 +1,147 @@
+h1 {
+    font-size: 4.5rem;
+    text-align: center;
+    margin-top: -0.25rem;
+    margin-bottom: -2.5rem;
+}
+
+p {
+    font-size: 2rem;
+    text-align: center;
+}
+
+body {
+    background-color: #242424;
+    font-family: Bebas Neue;
+    color: #EBEBCF;
+    letter-spacing: 0.1rem;
+}
+
+footer {
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 1;
+}
+
+.container {
+    text-align: center;
+}
+
+.button {
+    font-family: Bebas Neue;
+    border: none;
+    color: #242424;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2rem;
+    padding: 0.8rem 2rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    background-color: #EBEBCF;
+}
+
+.button:hover {
+    background-color: #242424;
+    color: #EBEBCF;
+}
+
+#game-board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 25px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.line {
+    border-bottom: 5px solid #EBEBCF;
+    min-width: 100px;
+    min-height: 100px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+    color: #EBEBCF;
+}
+
+.hint {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+#prompt {
+    color: #EBEBCF;
+}
+
+#history {
+    display: inline;
+    color: #EBEBCF;
+}
+
+#historyHeader {
+    color: #242424;
+}
+
+#share {
+    background-color: #242424;
+    color: #EBEBCF;
+    border: 2px solid #EBEBCF;
+}
+
+#share:hover {
+    background-color: #242424;
+}
+
+
+
+/*FORMATTING FOR ANYTHING SMALLER THAN 883PX*/
+@media screen and (max-width: 900px) {
+    h1 {
+        font-size: 3rem;
+        margin-bottom: -1rem;
+    }
+    p {
+        font-size: 1.5rem;
+    }
+    .button {
+        font-size: 2rem;
+        padding: 0.5rem 3rem;
+    }
+    footer {
+        font-size: 1rem;
+        position: relative;
+        margin-top: 1rem;
+    }
+}
+
+/*FORMATTING FOR ANYTHING SMALLER THAN 650PX*/
+@media screen and (max-width: 460px) {
+    h1 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 0.8rem;
+    }
+    .button {
+        font-size: 1rem;
+        margin-right: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    footer {
+        margin-top: 1rem;
+        font-size: 0.8rem;
+        position: relative;
+    }
+}

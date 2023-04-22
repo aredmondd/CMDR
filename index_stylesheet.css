@@ -1,0 +1,137 @@
+/*ITEM STYLING*/
+h1 {
+    font-size: 4.5rem;
+    text-align: center;
+    margin-top: -0.25rem;
+    margin-bottom: -2.5rem;
+}
+
+p {
+    font-size: 2rem;
+    text-align: center;
+}
+
+body {
+    background-color: #242424;
+    font-family: Bebas Neue;
+    color: #EBEBCF;
+    letter-spacing: 0.1rem;
+}
+
+footer {
+    font-size: 1.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 1;
+}
+
+/*CLASS STYLING*/
+
+.easy {
+    color: #7AE243;
+}
+
+.medium {
+    color: #FCF52C;
+}
+
+.hard {
+    color: #FC372A;
+}
+
+.vowels {
+    color: #0073FF;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+.container {
+    text-align: center;
+}
+
+.button {
+    border: none;
+    color:#242424;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 3rem;
+    font-family: Bebas Neue;
+    padding: 1rem 5rem;
+}
+
+/*INDIVIDUAL BUTTON STYLING*/
+.ebutton {
+    background-color: #7AE243;
+    margin-right: 2rem;
+}
+
+.ebutton:hover {
+    background-color: #242424;
+    color: #7AE243;
+}
+
+.mbutton {
+    background-color: #FCF52C;
+    margin-right: 2rem;
+}
+
+.mbutton:hover {
+    background-color: #242424;
+    color: #FCF52C;
+}
+
+.hbutton {
+    background-color: #FC372A;
+}
+
+.hbutton:hover {
+    background-color: #242424;
+    color: #FC372A;
+}
+
+/*DYNAMIC FOR MOBILE STUFF*/
+/*FORMATTING FOR ANYTHING SMALLER THAN 883PX*/
+@media screen and (max-width: 900px) {
+    h1 {
+        font-size: 3rem;
+        margin-bottom: -1rem;
+    }
+    p {
+        font-size: 1.5rem;
+    }
+    .button {
+        font-size: 2rem;
+        padding: 0.5rem 3rem;
+    }
+    footer {
+        font-size: 1rem;
+        position: relative;
+        margin-top: 1rem;
+    }
+}
+
+/*FORMATTING FOR ANYTHING SMALLER THAN 650PX*/
+@media screen and (max-width: 460px) {
+    h1 {
+        font-size: 2rem;
+    }
+    p {
+        font-size: 0.8rem;
+    }
+    .button {
+        font-size: 1rem;
+        margin-right: 1rem;
+        padding: 0.5rem 1rem;
+    }
+    footer {
+        margin-top: 1rem;
+        font-size: 0.8rem;
+        position: relative;
+    }
+}
