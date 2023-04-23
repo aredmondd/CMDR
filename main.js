@@ -18,7 +18,7 @@ const MODE = window.location.href;
 const PROMPT = document.querySelector("#prompt");
 const GAMEBOARD = document.querySelector("#board");
 const LINES = document.getElementById("board").childNodes;
-const HISTORY = document.querySelector("#history");
+let HISTORY = document.querySelector("#history");
 const HISTORYHEADER = HISTORY.querySelector("p");
 const SHAREBUTTON = document.querySelector("#share");
 
@@ -38,31 +38,12 @@ const EZLOSS = "I failed CMDR… And I played on the easiest difficult. Coach Ma
 let currentLocation = 0;
 let currentGuess = 1;
 let guessedWords = [];
-let real = true;
 let win = false;
 let lost = false;
 
-//VARS FOR TESTING LGSS
-let gamesPlayed = 0;
-
 //INITALIZE THE GAME
-initLocalStorage();
 createBoard();
-
-
-//difficulty settings
-if (MODE.includes("easy")) {
-    PROMPT.style.color = GREEN;
-    blueLines()
-}
-else if (MODE.includes("med")) {
-    PROMPT.style.color = YELLOW;
-    blueLines();
-}
-else /* (MODE.includes("hard")) */ { 
-    PROMPT.style.color = RED;
-}
-
+difficultySetting();
 
 //!FUNCTIONS
 
@@ -73,6 +54,21 @@ function createBoard() {
         line.classList.add("line");
         line.setAttribute("id", i);
         GAMEBOARD.appendChild(line);
+    }
+}
+
+//FUNCTION TO LOAD DIFFICULTY SETTING
+function difficultySetting() {
+    if (MODE.includes("easy")) {
+        PROMPT.style.color = GREEN;
+        blueLines()
+    }
+    else if (MODE.includes("med")) {
+        PROMPT.style.color = YELLOW;
+        blueLines();
+    }
+    else /* (MODE.includes("hard")) */ { 
+        PROMPT.style.color = RED;
     }
 }
 
@@ -220,8 +216,6 @@ function starBuilder(numOfStars, star) {
 
 //FUNCTION TO GENERATE SCORE CARD
 function generateScoreCard() {
-    let scoreCard = "";
-
     if (win || lost) {
         if (MODE.includes("easy")) {
             if (currentGuess == 1) {
@@ -275,6 +269,8 @@ function winScreen() {
     for (let i = 1; i <= LETTERS; i++) {
         LINES[i].style.color = GREEN;
     }
+
+    generateScoreCard();
 }
 
 //FUNCTIO TO SHOW LOSS
@@ -285,53 +281,16 @@ function lossScreen() {
 
         LINES[i].style.color = RED;
     }
-}
 
-//FUNCTION TO CHECK IF A WORD IS REAL //!DOES NOT WORK
-function isReal(input) {
-    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
-    .then(response => {
-        if (response.ok) {
-            real = true;
-        }
-        else if(response.status === 404) {
-            real = false;
-        }
-        return response.json();
-    })
-}
-
-//FUNCTION TO UPDATE THE AMOUNT OF GAMES PLAYED
-function updateGamesPlayed() {
-    window.localStorage.setItem("gamesPlayed", gamesPlayed + 1);
-}
-
-//LOCAL STORAGE STUFF
-function initLocalStorage() {
-    /*
-    let storedCurrentGuess = window.localStorage.getItem("currentGuess");
-    let storedGuessedWords = window.localStorage.getItem("guessedWords");
-    let storedCurrentLocation = window.localStorage.getItem("currentLocation");
-    let storedWin = window.localStorage.getItem("win");
-    let storedLost = window.localStorage.getItem("lost"); */
-    let storedGamesPlayed = window.localStorage.getItem("gamesPlayed");
-    if (!storedGamesPlayed) {
-        window.localStorage.setItem("gamesPlayed", gamesPlayed);
-    }
-    else {
-        gamesPlayed = Number(storedGamesPlayed);
-    }
-}
-
-//FUNCTION TO PRESERVE GAME STATE
-function preserveGameState() {
-    window.localStorage.setItem('guessedWords', JSON.stringify(guessedWords));
+    SHAREBUTTON.style.backgroundColor = WHITE;
+    SHAREBUTTON.style.color = BLACK;
+    generateScoreCard();
 }
 
 //THINGS TO DO WHEN A KEY IS PRESSED
 document.addEventListener('keydown', function(event) {
     let key = event.key; //get the key that was pressed
-   
+
     //if delete is pressed
     if ((key == "Backspace" || key == "Delete") && (currentLocation > 0)) {
         //reset the space to blank
@@ -345,26 +304,19 @@ document.addEventListener('keydown', function(event) {
 
     //if enter is pressed
     else if ((key == "Enter" || key == "Submit") && (currentLocation == LETTERS)) {
-
-        //show the history list once a word has been submitted
-        HISTORYHEADER.style.color = WHITE;
-
         //get the word
         let userInput = stringBuilder().toLowerCase();
 
-        //error checking
-        let unique = uniqueGuess(userInput);
-        isReal(userInput);
+        //show the history list
+        HISTORYHEADER.style.color = WHITE;
 
-        if (unique && real) {
+        //make sure the word hasn't already been guessed
+        if (uniqueGuess(userInput)) {
             //add word to guessed list
             guessedWords[currentGuess-1] = userInput;
-            
-            //see if the word is correct
-            let correct = correctWord(userInput);
 
             //if word is correct
-            if (correct) {
+            if (correctWord(userInput)) {
                 //make sharebutton clickable
                 SHAREBUTTON.style.backgroundColor = WHITE;
                 SHAREBUTTON.style.color = BLACK;
@@ -372,42 +324,29 @@ document.addEventListener('keydown', function(event) {
                 //stop all keyinput
                 win = true;
 
-                //make all the characters green (win screen)
+                //make all the characters green and generate the score card for the share button
                 winScreen();
-
-                //calculate score
-                generateScoreCard();
-
-                //update games played
-                updateGamesPlayed();
-
             }
             else {
                 //remove all the characters from the line
                 resetInput();
+
+                //update currentGuess
+                currentGuess++;
             }
 
-            currentGuess++;
-
-            //history
+            //update the history
             updateHistory(userInput);
         }
-        else if (!unique) {
+        else {
             alert("You have already guessed that word!");
             resetInput();
         }
-        else if (!real) {
-            alert("please use real english words");
-            resetInput();
-        }
 
-        if (currentGuess == 4) {
-            SHAREBUTTON.style.backgroundColor = WHITE;
-            SHAREBUTTON.style.color = BLACK;
-            updateGamesPlayed();
-            lost = true;
+        (currentGuess == 4) ? lost = true : lost = false;
+
+        if (lost) {
             lossScreen();
-            generateScoreCard();
         }
 
         currentLocation = 0;
