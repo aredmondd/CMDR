@@ -252,10 +252,10 @@ function generateScoreCard() {
                 shareLinkHref.setAttribute('href', HREFPREFIX + HARDWIN + starBuilder(3,"🌟"));
             }
             else if(currentGuess == 2) {
-                shareLinkHref.setAttribute('href', HREFPREFIX + HARDWIN + starBuilder(3,"🌟"));
+                shareLinkHref.setAttribute('href', HREFPREFIX + HARDWIN + starBuilder(2,"🌟"));
             }
             else if (currentGuess == 3) {
-                shareLinkHref.setAttribute('href', HREFPREFIX + HARDWIN + starBuilder(3,"🌟"));
+                shareLinkHref.setAttribute('href', HREFPREFIX + HARDWIN + starBuilder(1,"🌟"));
             }
             else {
                 shareLinkHref.setAttribute('href', HREFPREFIX + HARDLOSS);
