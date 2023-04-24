@@ -1,5 +1,4 @@
 //!VARIABLES
-
 //CONSTANTS BASED ON GAME MODE
 const KEY = "seven";
 const LETTERS = KEY.length;
@@ -46,9 +45,9 @@ createBoard();
 difficultySetting();
 
 //!FUNCTIONS
-
 //FUNCTION TO MAKE "LETTER" AMOUNT OF LINES
 function createBoard() {
+    GAMEBOARD.style.gridTemplateColumns = `repeat(${LETTERS}, 1fr)`;
     for (let i = 1; i <= LETTERS; i++) {
         let line = document.createElement("div");
         line.classList.add("line");
@@ -71,7 +70,6 @@ function difficultySetting() {
         PROMPT.style.color = RED;
     }
 }
-
 //FUNCTION TO MAKE BINARY ARRAY TO FIND VOWEL/CONSONANT (Y COUNTS, AND 0 == CONSONANT, 1 == VOWEL)
 function vcArray(word) {
     let array = [];

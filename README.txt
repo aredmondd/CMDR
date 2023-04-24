@@ -1,14 +1,6 @@
-Congratulations on finding your way here. You are either a developer looking to steal some code, or a user attmepting to find the answer to today's riddle.
-If you are the latter, you can turn around here. The path forward is fruitless.
+Final Project for Web Development Spring 2023.
 
-
-
-First of all, I would like to thank Coach Matt for consistently difficult riddles that inspired me to make this website. Without your support and inspiration, this final project wouldn't have come to life.
-
-I would also like to thank Dr. Roberson, for basically 24/7 slack support I got handling errors and such. Your dedication to your students does not go unnoticed.
-
-To my playtesters: ,thank you for giving me feedback I wasn't willing to hear.
-
+Special thanks to: Coach Matt, Dr. Roberson, Jame Simpson, Luke Dickinson, Jennica Joseph, & StackOverflow
 
 
                        .,,uod8B8bou,,.
