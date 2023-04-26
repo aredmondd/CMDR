@@ -1,6 +1,6 @@
 //!VARIABLES
 //CONSTANTS BASED ON GAME MODE
-const KEY = "seven";
+const KEY = "stone";
 const LETTERS = KEY.length;
 const NUMOFGUESS = 3;
 
@@ -271,7 +271,7 @@ function winScreen() {
     generateScoreCard();
 }
 
-//FUNCTIO TO SHOW LOSS
+//FUNCTION TO SHOW LOSS
 function lossScreen() {
     let ulost = "ULOST";
     for (let i = 1; i <= LETTERS; i++) {
@@ -283,6 +283,75 @@ function lossScreen() {
     SHAREBUTTON.style.backgroundColor = WHITE;
     SHAREBUTTON.style.color = BLACK;
     generateScoreCard();
+}
+
+//FUNCTION TO CALL API
+async function checkResponseStatus(input) {
+    try {
+      const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`);
+      if (response.status === 404) {
+        return false; // return false if the response returns a 404 error
+      } else if (response.ok) {
+        return true; // return true if the response is successful
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return false; // return false if there is an error making the request
+}
+
+//FUNCTION OF STUFF TO DO WHEN THE WORD IS REAl
+function wordIsReal(userInput) {
+    //check if word is real and unique
+    let unique = uniqueGuess(userInput);
+
+    //make sure the word hasn't already been guessed
+    if (unique) {
+        //show the history list
+        HISTORYHEADER.style.color = WHITE;
+
+        //add word to guessed list
+        guessedWords[currentGuess-1] = userInput;
+
+        //if word is correct
+        if (correctWord(userInput)) {
+            //make sharebutton clickable
+            SHAREBUTTON.style.backgroundColor = WHITE;
+            SHAREBUTTON.style.color = BLACK;
+
+            //stop all keyinput
+            win = true;
+
+            //make all the characters green and generate the score card for the share button
+            winScreen();
+        }
+        else {
+            //remove all the characters from the line
+            resetInput();
+
+            //update currentGuess
+            currentGuess++;
+        }
+
+        //update the history
+        updateHistory(userInput);
+    }
+    else {
+        alert("You have already guessed that word!");
+        resetInput();
+    }
+
+    (currentGuess == 4) ? lost = true : lost = false;
+
+    if (lost) {
+        lossScreen();
+    }
+}
+
+//FUNCTION OF STUFF TO DO WHEN THE WORD IS NOT REAL
+function wordIsNotReal() {
+    alert("Please only enter real words!");
+    resetInput();
 }
 
 //THINGS TO DO WHEN A KEY IS PRESSED
@@ -305,49 +374,17 @@ document.addEventListener('keydown', function(event) {
         //get the word
         let userInput = stringBuilder().toLowerCase();
 
-        //show the history list
-        HISTORYHEADER.style.color = WHITE;
-
-        //make sure the word hasn't already been guessed
-        if (uniqueGuess(userInput)) {
-            //add word to guessed list
-            guessedWords[currentGuess-1] = userInput;
-
-            //if word is correct
-            if (correctWord(userInput)) {
-                //make sharebutton clickable
-                SHAREBUTTON.style.backgroundColor = WHITE;
-                SHAREBUTTON.style.color = BLACK;
-
-                //stop all keyinput
-                win = true;
-
-                //make all the characters green and generate the score card for the share button
-                winScreen();
+        checkResponseStatus(userInput)
+        .then((result) => {
+            if (result == true) {
+                wordIsReal(userInput);
             }
-            else {
-                //remove all the characters from the line
-                resetInput();
-
-                //update currentGuess
-                currentGuess++;
+            else if (result == false) {
+                wordIsNotReal();
             }
 
-            //update the history
-            updateHistory(userInput);
-        }
-        else {
-            alert("You have already guessed that word!");
-            resetInput();
-        }
-
-        (currentGuess == 4) ? lost = true : lost = false;
-
-        if (lost) {
-            lossScreen();
-        }
-
-        currentLocation = 0;
+            currentLocation = 0;
+        })
     }
 
 

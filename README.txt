@@ -1,6 +1,6 @@
 Final Project for Web Development Spring 2023.
 
-Special thanks to: Coach Matt, Dr. Roberson, Jame Simpson, Luke Dickinson, & StackOverflow
+Special thanks to: Coach Matt, Dr. Roberson, Jame Simpson, Luke Dickinson, Jennica Joseph, & StackOverflow
 
 
                        .,,uod8B8bou,,.
